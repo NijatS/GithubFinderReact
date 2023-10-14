@@ -8,10 +8,12 @@ export class Users extends Component {
       return <Loader />;
     } else {
       return (
-        <div className=" d-flex flex-wrap">
-          {this.props.users.map((user) => (
-            <User user={user} />
-          ))}
+        <div className="container">
+          <div className="d-flex flex-wrap justify-content-center">
+            {this.props.users.map((user) => (
+              <User user={user} key={user.id} />
+            ))}
+          </div>
         </div>
       );
     }
