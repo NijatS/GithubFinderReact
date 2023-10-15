@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { BrowserRouter, Route, Switch, NavLink } from "react-router-dom";
 import Navbar from "./Navbar";
 import Users from "./Users";
 import Search from "./Search";
 import Alert from "./Alert";
+import About from "./About";
 import axios from "axios";
 
 export class App extends Component {
@@ -41,17 +43,28 @@ export class App extends Component {
   }
   render() {
     return (
-      <>
+      <BrowserRouter>
         <Navbar />
         <Alert alert={this.state.alert} clearAlert={this.clearAlert} />
-        <Search
-          searchUsers={this.searchUsers}
-          clearItems={this.clearItems}
-          showClearBtn={this.state.users.length > 0 ? true : false}
-          setAlert={this.setAlert}
-        />
-        <Users users={this.state.users} loader={this.state.loader} />
-      </>
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={(props) => (
+              <>
+                <Search
+                  searchUsers={this.searchUsers}
+                  clearItems={this.clearItems}
+                  showClearBtn={this.state.users.length > 0 ? true : false}
+                  setAlert={this.setAlert}
+                />
+                <Users users={this.state.users} loader={this.state.loader} />
+              </>
+            )}
+          />
+          <Route path="/about" component={About} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
