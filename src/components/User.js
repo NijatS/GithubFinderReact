@@ -16,9 +16,9 @@ export class User extends Component {
           <li className="list-group-item">Type: {type}</li>
         </ul>
         <div className="card-body">
-          <NavLink to={`/users/${login}`} className="card-link btn btn-primary">
+          <Link to={`/users/${login}`} className="card-link btn btn-primary">
             Go Profile
-          </NavLink>
+          </Link>
         </div>
       </div>
     );

@@ -1,10 +1,59 @@
-$green: green;
-
 body {
-  h1 {
-    color: $green;
-  }
   .active {
     color: red;
   }
+}
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
+nav {
+  background: linear-gradient(to right, #ec2f4b, #009fff);
+}
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.header {
+  min-height: calc(100vh - 56px);
+  background: #009fff;
+  background: linear-gradient(to right, #ec2f4b, #009fff);
+  color: white;
+  clip-path: ellipse(100vw 60vh at 50% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details {
+  text-align: center;
+}
+
+.profile-pic {
+  height: 11rem;
+  width: 11rem;
+  object-fit: center;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.location p {
+  display: inline-block;
+}
+
+.location svg {
+  vertical-align: middle;
+}
+
+.stats {
+  display: flex;
+}
+
+.stats .col-4 {
+  width: 10rem;
+  text-align: center;
+}
+
+.heading {
+  font-weight: 400;
+  font-size: 1.6rem;
+  margin: 1rem 0;
 }

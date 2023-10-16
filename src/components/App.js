@@ -80,6 +80,7 @@ export class App extends Component {
                 {...props}
                 getUser={this.getUser}
                 user={this.state.user}
+                loader={this.state.loader}
               />
             )}
           />
