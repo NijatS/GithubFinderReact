@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 export class User extends Component {
   render() {
@@ -14,9 +16,9 @@ export class User extends Component {
           <li className="list-group-item">Type: {type}</li>
         </ul>
         <div className="card-body">
-          <a href={html_url} className="card-link btn btn-primary">
+          <NavLink to={`/users/${login}`} className="card-link btn btn-primary">
             Go Profile
-          </a>
+          </NavLink>
         </div>
       </div>
     );
