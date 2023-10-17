@@ -17,11 +17,13 @@ export class App extends Component {
     this.setAlert = this.setAlert.bind(this);
     this.clearAlert = this.clearAlert.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.getUserRepos = this.getUserRepos.bind(this);
     this.state = {
       users: [],
       loader: false,
       alert: null,
       user: {},
+      repos: [],
     };
   }
   componentDidMount() {
@@ -35,15 +37,27 @@ export class App extends Component {
   }
   getUser(username) {
     this.setState({ loader: true });
-    axios
-      .get(`https://api.github.com/users/${username}`)
-      .then((res) => this.setState({ user: res.data, loader: false }));
+    setTimeout(() => {
+      axios
+        .get(`https://api.github.com/users/${username}`)
+        .then((res) => this.setState({ user: res.data, loader: false }));
+    }, 1000);
+  }
+  getUserRepos(username) {
+    this.setState({ loader: true });
+    setTimeout(() => {
+      axios
+        .get(`https://api.github.com/users/${username}/repos`)
+        .then((res) => this.setState({ repos: res.data, loader: false }));
+    }, 1000);
   }
   searchUsers(keyword) {
     this.setState({ loader: true });
-    axios
-      .get(`https://api.github.com/search/users?q=${keyword}`)
-      .then((res) => this.setState({ users: res.data.items, loader: false }));
+    setTimeout(() => {
+      axios
+        .get(`https://api.github.com/search/users?q=${keyword}`)
+        .then((res) => this.setState({ users: res.data.items, loader: false }));
+    }, 1000);
   }
   setAlert(msg, type) {
     this.setState({ alert: { msg, type } });
@@ -80,7 +94,9 @@ export class App extends Component {
                 {...props}
                 getUser={this.getUser}
                 user={this.state.user}
+                repos={this.state.repos}
                 loader={this.state.loader}
+                getUserRepos={this.getUserRepos}
               />
             )}
           />

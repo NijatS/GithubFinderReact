@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Loader from "./Loader";
+import Repos from "./Repos";
 
 class UserDetail extends Component {
   componentDidMount() {
     this.props.getUser(this.props.match.params.login);
+    this.props.getUserRepos(this.props.match.params.login);
   }
   render() {
-    console.log(this.props.user);
+    const repos = this.props.repos;
     const { name, avatar_url, location, followers, following, public_repos } =
       this.props.user;
     if (this.props.loader) {
@@ -16,7 +18,7 @@ class UserDetail extends Component {
         <section className="profile">
           <header className="header">
             <div className="details">
-              <img src={avatar_url} alt="John Doe" className="profile-pic" />
+              <img src={avatar_url} alt={name} className="profile-pic" />
               <h1 className="heading">{name}</h1>
               <div className="location">
                 <svg
@@ -45,6 +47,7 @@ class UserDetail extends Component {
               </div>
             </div>
           </header>
+          <Repos repos={repos} />
         </section>
       );
     }

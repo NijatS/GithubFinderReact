@@ -6,14 +6,20 @@ body {
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
 nav {
   background: linear-gradient(to right, #ec2f4b, #009fff);
+  position: fixed !important;
+  z-index: 11 !important;
+  width: 100% !important;
 }
 body {
   margin: 0;
   font-family: "Lato", sans-serif;
 }
-
+a {
+  cursor: pointer;
+}
 .header {
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh);
+  padding-top: 56px;
   background: #009fff;
   background: linear-gradient(to right, #ec2f4b, #009fff);
   color: white;
@@ -56,4 +62,13 @@ body {
   font-weight: 400;
   font-size: 1.6rem;
   margin: 1rem 0;
+}
+[data-toggle="collapse"] {
+  cursor: pointer;
+}
+[data-toggle="collapse"][aria-expanded="true"] .fa-chevron-right:before {
+  content: "";
+}
+.badge {
+  color: black !important;
 }

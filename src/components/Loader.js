@@ -5,7 +5,7 @@ const Loader = () => {
   return (
     <>
       <img
-        src={loader}
+        src={`${loader}`}
         alt=""
         style={{ width: "200px", display: "block", margin: "auto" }}
       />
