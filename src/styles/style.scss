@@ -14,7 +14,13 @@ nav {
 body {
   margin: 0;
   font-family: "Lato", sans-serif;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
+
 a {
   cursor: pointer;
 }
@@ -28,6 +34,9 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.about-container {
+  padding-top: 56px;
 }
 .search {
   padding-top: 56px;
