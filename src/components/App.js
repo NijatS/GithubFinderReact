@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { BrowserRouter, Route, Switch, NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navbar from "./Navbar";
 import Users from "./Users";
 import Search from "./Search";
@@ -8,68 +8,53 @@ import About from "./About";
 import axios from "axios";
 import UserDetail from "./UserDetail";
 import Loader from "./Loader";
+import GithubState from "../context/GithubState";
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
-    this.searchUsers = this.searchUsers.bind(this);
-    this.clearItems = this.clearItems.bind(this);
-    this.setAlert = this.setAlert.bind(this);
-    this.clearAlert = this.clearAlert.bind(this);
-    this.getUser = this.getUser.bind(this);
-    this.getUserRepos = this.getUserRepos.bind(this);
-    this.state = {
-      users: [],
-      loader: false,
-      alert: null,
-      user: {},
-      repos: [],
-    };
-  }
-  componentDidMount() {
-    this.setState({ loader: true });
-    axios
-      .get("https://api.github.com/users")
-      .then((res) => this.setState({ users: res.data, loader: false }));
-  }
-  clearItems() {
-    this.setState({ users: [] });
-  }
-  getUser(username) {
-    this.setState({ loader: true });
-    setTimeout(() => {
-      axios
-        .get(`https://api.github.com/users/${username}`)
-        .then((res) => this.setState({ user: res.data, loader: false }));
-    }, 1000);
-  }
-  getUserRepos(username) {
-    this.setState({ loader: true });
+const App = () => {
+  const [users, setUsers] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [user, setUser] = useState({});
+  const [alert, setAlert] = useState(null);
+  const [repos, setRepos] = useState([]);
+
+  const clearItems = () => {
+    setUsers([]);
+  };
+
+  const getUserRepos = (username) => {
+    setLoader(true);
     setTimeout(() => {
       axios
         .get(`https://api.github.com/users/${username}/repos`)
-        .then((res) => this.setState({ repos: res.data, loader: false }));
+        .then((res) => {
+          setRepos(res.data);
+          setLoader(false);
+        });
     }, 1000);
-  }
-  searchUsers(keyword) {
-    this.setState({ loader: true });
+  };
+  const getUser = (username) => {
+    setLoader(true);
     setTimeout(() => {
-      axios
-        .get(`https://api.github.com/search/users?q=${keyword}`)
-        .then((res) => this.setState({ users: res.data.items, loader: false }));
+      axios.get(`https://api.github.com/users/${username}`).then((res) => {
+        setUser(res.data);
+        setLoader(false);
+      });
     }, 1000);
-  }
-  setAlert(msg, type) {
-    this.setState({ alert: { msg, type } });
-  }
-  clearAlert() {
+  };
+
+  const showAlert = (msg, type) => {
+    setAlert({ msg, type });
+  };
+  const clearAlert = () => {
     this.setState({ alert: null });
-  }
-  render() {
-    return (
+    setAlert(null);
+  };
+
+  return (
+    <GithubState>
       <BrowserRouter>
         <Navbar />
-        <Alert alert={this.state.alert} clearAlert={this.clearAlert} />
+        <Alert alert={alert} clearAlert={clearAlert} />
         <Switch>
           <Route
             path="/"
@@ -77,12 +62,11 @@ export class App extends Component {
             render={(props) => (
               <>
                 <Search
-                  searchUsers={this.searchUsers}
-                  clearItems={this.clearItems}
-                  showClearBtn={this.state.users.length > 0 ? true : false}
-                  setAlert={this.setAlert}
+                  clearItems={clearItems}
+                  showClearBtn={users.length > 0 ? true : false}
+                  setAlert={showAlert}
                 />
-                <Users users={this.state.users} loader={this.state.loader} />
+                <Users users={users} loader={loader} />
               </>
             )}
           />
@@ -92,18 +76,18 @@ export class App extends Component {
             render={(props) => (
               <UserDetail
                 {...props}
-                getUser={this.getUser}
-                user={this.state.user}
-                repos={this.state.repos}
-                loader={this.state.loader}
-                getUserRepos={this.getUserRepos}
+                getUser={getUser}
+                user={user}
+                repos={repos}
+                loader={loader}
+                getUserRepos={getUserRepos}
               />
             )}
           />
         </Switch>
       </BrowserRouter>
-    );
-  }
-}
+    </GithubState>
+  );
+};
 
 export default App;
