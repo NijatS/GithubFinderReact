@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./src/examples/Note-App.js",
+  entry: "./src/examples/Note_App/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
