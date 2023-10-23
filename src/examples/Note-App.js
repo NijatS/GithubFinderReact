@@ -1,32 +1,47 @@
-import React, { StrictMode, useEffect, useState } from "react";
+import React, { StrictMode, useEffect, useState, useReducer } from "react";
 import ReactDOM from "react-dom";
 import "../styles/main.scss";
 
+const NotesReducer = (state, action) => {
+  switch (action.type) {
+    case "Population_Notes":
+      return action.notes;
+    case "Add_Note":
+      return [...state, { title: action.title, body: action.body }];
+    case "Remove_Note":
+      return state.filter((note) => note.title !== action.title);
+    default:
+      return state;
+  }
+};
+
 const NoteApp = () => {
-  const [notes, setNotes] = useState([]);
+  const [notes, dispatch] = useReducer(NotesReducer, []);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
   const addNote = (e) => {
     e.preventDefault();
     if (title) {
-      setNotes([...notes, { title, body }]);
+      // setNotes([...notes, { title, body }]);
+      dispatch({ type: "Add_Note", title, body });
       setTitle("");
       setBody("");
-      console.log(notes);
     }
   };
   useEffect(() => {
     const LocalNotes = JSON.parse(localStorage.getItem("notes"));
     if (LocalNotes) {
-      setNotes(LocalNotes);
+      // setNotes(LocalNotes);
+      dispatch({ type: "Population_Notes", notes: LocalNotes });
     }
   }, []);
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   });
   const removeNote = (title) => {
-    setNotes(notes.filter((note) => note.title !== title));
+    // setNotes(notes.filter((note) => note.title !== title));
+    dispatch({ type: "Remove_Note", title });
   };
   return (
     <div className="container p-5">
