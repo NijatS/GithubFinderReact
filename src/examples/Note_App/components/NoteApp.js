@@ -2,6 +2,7 @@ import React, { useEffect, useState, useReducer } from "react";
 import NotesReducer from "../reducers/notes";
 import Notes from "./Notes";
 import AddNoteForm from "./AddNoteForm";
+import NoteContext from "../context/NoteContext";
 
 const NoteApp = () => {
   const [notes, dispatch] = useReducer(NotesReducer, []);
@@ -15,30 +16,30 @@ const NoteApp = () => {
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   });
-  const removeNote = (title) => {
-    dispatch({ type: "Remove_Note", title });
-  };
+
   return (
-    <div className="container p-5">
-      <div className="card mb-3">
-        <div className="card-header">Notes</div>
-        <div className="card-body">
-          {notes && (
-            <table className="table table-sm table-striped mb-0">
-              <tbody>
-                <Notes notes={notes} removeNote={removeNote} />
-              </tbody>
-            </table>
-          )}
+    <NoteContext.Provider value={{ notes, dispatch }}>
+      <div className="container p-5">
+        <div className="card mb-3">
+          <div className="card-header">Notes</div>
+          <div className="card-body">
+            {notes && (
+              <table className="table table-sm table-striped mb-0">
+                <tbody>
+                  <Notes />
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+        <div className="card mb-3">
+          <div className="card-header">Add New Note</div>
+          <div className="card-body">
+            <AddNoteForm />
+          </div>
         </div>
       </div>
-      <div className="card mb-3">
-        <div className="card-header">Add New Note</div>
-        <div className="card-body">
-          <AddNoteForm dispatch={dispatch} />
-        </div>
-      </div>
-    </div>
+    </NoteContext.Provider>
   );
 };
 export default NoteApp;

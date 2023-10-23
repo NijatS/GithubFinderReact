@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import NoteContext from "../context/NoteContext";
 
-const Note = ({ note, removeNote }) => {
+const Note = ({ note }) => {
+  const { dispatch } = useContext(NoteContext);
+  const removeNote = (title) => {
+    dispatch({ type: "Remove_Note", title });
+  };
   return (
     <tr key={note.title}>
       <td>{note.title}</td>
