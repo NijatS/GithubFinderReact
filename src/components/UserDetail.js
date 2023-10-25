@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import Loader from "./Loader";
 import Repos from "./Repos";
+import GithubContext from "../context/GithubContext";
 
-const UserDetail = ({ getUser, getUserRepos, match, repos, user, loader }) => {
+const UserDetail = ({ getUserRepos, match, repos }) => {
+  const { getUser, user, loader } = useContext(GithubContext);
+
   useEffect(() => {
     getUser(match.params.login);
     getUserRepos(match.params.login);
   }, []);
-
   const { name, avatar_url, location, followers, following, public_repos } =
     user;
   if (loader) {

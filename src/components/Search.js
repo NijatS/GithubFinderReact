@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import GithubContext from "../context/GithubContext";
 
-const Search = ({ setAlert, showClearBtn, clearItems }) => {
+const Search = ({ setAlert }) => {
   const [keyword, setKeyword] = useState("");
   const githubContext = useContext(GithubContext);
-  const { searchUsers } = githubContext;
+  const { searchUsers, clearItems, users } = githubContext;
   const SearchUser = (e) => {
     setKeyword(e.target.value);
   };
@@ -34,7 +34,7 @@ const Search = ({ setAlert, showClearBtn, clearItems }) => {
           </div>
         </div>
       </form>
-      {showClearBtn && (
+      {users.length > 0 && (
         <button
           onClick={clearItems}
           className="btn btn-danger btn-m w-100 py-2 mt-2"

@@ -11,15 +11,9 @@ import Loader from "./Loader";
 import GithubState from "../context/GithubState";
 
 const App = () => {
-  const [users, setUsers] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [user, setUser] = useState({});
   const [alert, setAlert] = useState(null);
   const [repos, setRepos] = useState([]);
-
-  const clearItems = () => {
-    setUsers([]);
-  };
 
   const getUserRepos = (username) => {
     setLoader(true);
@@ -32,16 +26,6 @@ const App = () => {
         });
     }, 1000);
   };
-  const getUser = (username) => {
-    setLoader(true);
-    setTimeout(() => {
-      axios.get(`https://api.github.com/users/${username}`).then((res) => {
-        setUser(res.data);
-        setLoader(false);
-      });
-    }, 1000);
-  };
-
   const showAlert = (msg, type) => {
     setAlert({ msg, type });
   };
@@ -59,14 +43,10 @@ const App = () => {
           <Route
             path="/"
             exact
-            render={(props) => (
+            render={() => (
               <>
-                <Search
-                  clearItems={clearItems}
-                  showClearBtn={users.length > 0 ? true : false}
-                  setAlert={showAlert}
-                />
-                <Users users={users} loader={loader} />
+                <Search setAlert={showAlert} />
+                <Users />
               </>
             )}
           />
@@ -76,10 +56,7 @@ const App = () => {
             render={(props) => (
               <UserDetail
                 {...props}
-                getUser={getUser}
-                user={user}
                 repos={repos}
-                loader={loader}
                 getUserRepos={getUserRepos}
               />
             )}
