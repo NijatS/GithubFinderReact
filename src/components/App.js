@@ -11,21 +11,7 @@ import Loader from "./Loader";
 import GithubState from "../context/GithubState";
 
 const App = () => {
-  const [loader, setLoader] = useState(false);
   const [alert, setAlert] = useState(null);
-  const [repos, setRepos] = useState([]);
-
-  const getUserRepos = (username) => {
-    setLoader(true);
-    setTimeout(() => {
-      axios
-        .get(`https://api.github.com/users/${username}/repos`)
-        .then((res) => {
-          setRepos(res.data);
-          setLoader(false);
-        });
-    }, 1000);
-  };
   const showAlert = (msg, type) => {
     setAlert({ msg, type });
   };
@@ -51,16 +37,7 @@ const App = () => {
             )}
           />
           <Route path="/about" component={About} />
-          <Route
-            path="/users/:login"
-            render={(props) => (
-              <UserDetail
-                {...props}
-                repos={repos}
-                getUserRepos={getUserRepos}
-              />
-            )}
-          />
+          <Route path="/users/:login" component={UserDetail} />
         </Switch>
       </BrowserRouter>
     </GithubState>

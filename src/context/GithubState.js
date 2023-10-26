@@ -41,6 +41,16 @@ const GithubState = (props) => {
   const setLoader = () => {
     dispatch({ type: "Set_Loading" });
   };
+  const getUserRepos = (username) => {
+    setLoader();
+    setTimeout(() => {
+      axios
+        .get(`https://api.github.com/users/${username}/repos`)
+        .then((res) => {
+          dispatch({ type: "Get_Repos", payload: res.data });
+        });
+    }, 1000);
+  };
   return (
     <GithubContext.Provider
       value={{
@@ -51,6 +61,7 @@ const GithubState = (props) => {
         searchUsers,
         clearItems,
         getUser,
+        getUserRepos,
       }}
     >
       {props.children}

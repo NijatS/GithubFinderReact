@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Repo from "./Repo";
-const Repos = ({ repos }) => {
+import GithubContext from "../context/GithubContext";
+const Repos = () => {
+  const { repos } = useContext(GithubContext);
+
   return (
     <>
       <h1>Repositories</h1>

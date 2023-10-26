@@ -3,8 +3,8 @@ import Loader from "./Loader";
 import Repos from "./Repos";
 import GithubContext from "../context/GithubContext";
 
-const UserDetail = ({ getUserRepos, match, repos }) => {
-  const { getUser, user, loader } = useContext(GithubContext);
+const UserDetail = ({ match }) => {
+  const { getUser, getUserRepos, user, loader } = useContext(GithubContext);
 
   useEffect(() => {
     getUser(match.params.login);
@@ -48,7 +48,7 @@ const UserDetail = ({ getUserRepos, match, repos }) => {
             </div>
           </div>
         </header>
-        <Repos repos={repos} />
+        <Repos />
       </section>
     );
   }
