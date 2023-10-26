@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import Loader from "./Loader";
 import Repos from "./Repos";
-import GithubContext from "../context/GithubContext";
+import GithubContext from "../context/github/GithubContext";
 
 const UserDetail = ({ match }) => {
   const { getUser, getUserRepos, user, loader } = useContext(GithubContext);

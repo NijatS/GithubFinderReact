@@ -41,6 +41,11 @@ a {
 .search {
   padding-top: 56px;
 }
+.alert {
+  z-index: 999;
+  position: absolute;
+  right: 20px;
+}
 .details {
   text-align: center;
 }

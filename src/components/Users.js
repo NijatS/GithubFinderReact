@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import User from "./User";
 import Loader from "./Loader";
-import GithubContext from "../context/GithubContext";
+import GithubContext from "../context/github/GithubContext";
 
 const Users = () => {
   const githubContext = useContext(GithubContext);
